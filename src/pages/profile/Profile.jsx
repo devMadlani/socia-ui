@@ -5,6 +5,7 @@ import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
 import "./profile.css";
 function Profile() {
+  const PF = import.meta.env.VITE_PUBLIC_FOLDER || "/assets/";
   return (
     <>
       <TopBar />
@@ -15,12 +16,12 @@ function Profile() {
             <div className="profileCover">
               <img
                 className="profileCoverImg"
-                src="/assets/post/3.jpeg"
+                src={`${PF}post/3.jpeg`}
                 alt=""
               />
               <img
                 className="profileUserImg "
-                src="/assets/person/7.jpeg"
+                src={`${PF}person/7.jpeg`}
                 alt=""
               />
             </div>

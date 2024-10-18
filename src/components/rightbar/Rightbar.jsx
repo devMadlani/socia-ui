@@ -3,15 +3,17 @@ import { Users } from "../../dummyData";
 import Online from "../online/Online";
 function Rightbar({ profile }) {
   const HomeRightbar = () => {
+  const PF = import.meta.env.VITE_PUBLIC_FOLDER || "/assets/";
+
     return (
       <>
         <div className="birthdayContainer">
-          <img className="birthdatImg" src="/assets/gift.png" alt="" />
+          <img className="birthdatImg" src={`${PF}gift.png`} alt="" />
           <span className="birthdayText">
             <b>Mohit</b> and <b>2 others friends</b> have a birthday today
           </span>
         </div>
-        <img className="rightbarAd" src="/assets/ad.png" alt="" />
+        <img className="rightbarAd" src={`${PF}/ad.png`} alt="" />
         <h4 className="rightBarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
           {Users.map((user) => (
@@ -22,6 +24,8 @@ function Rightbar({ profile }) {
     );
   };
   const ProfileRightbar = () => {
+  const PF = import.meta.env.VITE_PUBLIC_FOLDER || "/assets/";
+
     return (
       <>
         <h4 className="rightBarTitle">User Information</h4>
@@ -44,7 +48,7 @@ function Rightbar({ profile }) {
           <div className="rightbarFollowing">
             <img
               className="rightbarFollowingImg"
-              src="/assets/person/1.jpeg"
+              src={`${PF}person/1.jpeg`}
               alt=""
             />
             <spam className="rightFollowingName">Dev madlani</spam>
@@ -52,7 +56,7 @@ function Rightbar({ profile }) {
           <div className="rightbarFollowing">
             <img
               className="rightbarFollowingImg"
-              src="/assets/person/2.jpeg"
+              src={`${PF}person/2.jpeg`}
               alt=""
             />
             <spam className="rightFollowingName">Dev madlani</spam>
@@ -60,7 +64,7 @@ function Rightbar({ profile }) {
           <div className="rightbarFollowing">
             <img
               className="rightbarFollowingImg"
-              src="/assets/person/3.jpeg"
+              src={`${PF}person/3.jpeg`}
               alt=""
             />
             <spam className="rightFollowingName">Dev madlani</spam>
@@ -68,7 +72,7 @@ function Rightbar({ profile }) {
           <div className="rightbarFollowing">
             <img
               className="rightbarFollowingImg"
-              src="/assets/person/4.jpeg"
+              src={`${PF}person/4.jpeg`}
               alt=""
             />
             <spam className="rightFollowingName">Dev madlani</spam>
@@ -76,7 +80,7 @@ function Rightbar({ profile }) {
           <div className="rightbarFollowing">
             <img
               className="rightbarFollowingImg"
-              src="/assets/person/5.jpeg"
+              src={`${PF}person/5.jpeg`}
               alt=""
             />
             <spam className="rightFollowingName">Dev madlani</spam>
@@ -84,7 +88,7 @@ function Rightbar({ profile }) {
           <div className="rightbarFollowing">
             <img
               className="rightbarFollowingImg"
-              src="/assets/person/6.jpeg"
+              src={`${PF}person/6.jpeg`}
               alt=""
             />
             <spam className="rightFollowingName">Dev madlani</spam>
