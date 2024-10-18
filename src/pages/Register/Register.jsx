@@ -1,6 +1,32 @@
-import React from 'react'
-import './register.css'
+import React, { useContext, useRef } from "react";
+import "./register.css";
+import { AuthContext } from "../../context/AuthContext";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 function Register() {
+  const username = useRef(null);
+  const email = useRef(null);
+  const password = useRef(null);
+  const confirmPassword = useRef(null);
+  const history = useNavigate();
+  const { user, isFetching, error, dispatch } = useContext(AuthContext);
+  console.log(user);
+  const handleClick = async (e) => {
+    e.preventDefault();
+    if (password.current.value !== confirmPassword.current.value) {
+      password.current.setCustomValidity("Passwords don't matched");
+    } else {
+      const user = {
+        username: username.current.value,
+        email: email.current.value,
+        password: password.current.value,
+      };
+      try {
+        await axios.post("http://localhost:8800/api/auth/register", user);
+        history("/login")
+      } catch (error) {}
+    }
+  };
   return (
     <div className="login">
       <div className="loginWrapper">
@@ -11,26 +37,46 @@ function Register() {
           </span>
         </div>
         <div className="loginRight">
-          <div className="loginBox">
-            <input type="text" className="loginInput" placeholder="User Name" />
-            <input type="email" className="loginInput" placeholder="Email" />
+          <form className="loginBox" onSubmit={handleClick}>
             <input
+              ref={username}
+              type="text"
+              className="loginInput"
+              placeholder="User Name"
+              required
+            />
+            <input
+              ref={email}
+              type="email"
+              className="loginInput"
+              placeholder="Email"
+              required
+            />
+            <input
+              ref={password}
               type="password"
               className="loginInput"
               placeholder="Password"
+              required
+              minLength={6}
             />
             <input
+              ref={confirmPassword}
               type="password"
               className="loginInput"
               placeholder="Password Again"
+              required
+              minLength={6}
             />
-            <button className="loginBtn">Sign Up</button>
+            <button className="loginBtn" type="submit">
+              Sign Up
+            </button>
             <button className="loginRegisterBtn">Sign In</button>
-          </div>
+          </form>
         </div>
       </div>
     </div>
   );
 }
 
-export default Register
+export default Register;

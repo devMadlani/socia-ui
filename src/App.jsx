@@ -1,30 +1,32 @@
 import Home from "./pages/home/Home";
-import Login from "./pages/login/Login"
-import Register from "./pages/Register/Register"
-import Profile from "./pages/profile/Profile"
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Login from "./pages/login/Login";
+import Register from "./pages/Register/Register";
+import Profile from "./pages/profile/Profile";
+import { createBrowserRouter, RouterProvider ,Navigate} from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
 function App() {
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
-  },
-  {
-    path: "/profile/:username",
-    element: <Profile />,
-  },
-]);
-  return (
-    <RouterProvider router={router}/>
-  );
+  const { user } = useContext(AuthContext);
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: user ? <Home /> : <Register />,
+    },
+    {
+      path: "/login",
+      element: user ? <Navigate to="/" /> : <Login />,
+    },
+    {
+      path: "/register",
+      element: user ? <Navigate to="/" /> : <Register />,
+    },
+    {
+      path: "/profile/:username",
+      element: <Profile />,
+    },
+  ]);
+  return <RouterProvider router={router} />;
 }
 
 export default App;
