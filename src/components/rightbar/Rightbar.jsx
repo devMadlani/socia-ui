@@ -1,9 +1,12 @@
 import "./rightbar.css";
 import { Users } from "../../dummyData";
 import Online from "../online/Online";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 function Rightbar({ user }) {
   const HomeRightbar = () => {
-    const PF = import.meta.env.VITE_PUBLIC_FOLDER || "/assets/";
+    const PF = import.meta.env.VITE_PUBLIC_FOLDER;
 
     return (
       <>
@@ -17,15 +20,26 @@ function Rightbar({ user }) {
         <h4 className="rightBarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
           {Users.map((user) => (
-            <Online user={user} key={user.id} />
+            <Online user={user} key={user?.id} />
           ))}
         </ul>
       </>
     );
   };
   const ProfileRightbar = () => {
-    const PF = import.meta.env.VITE_PUBLIC_FOLDER || "/assets/";
-
+    const PF = import.meta.env.VITE_PUBLIC_FOLDER;
+    const [friends, setFriends] = useState();
+    useEffect(() => {
+      const getFriends = async () => {
+        try {
+          const friendList = await axios.get(
+            "http://localhost:8800/api/users/friends/" + user?._id
+          );
+          setFriends(friendList.data);
+        } catch (error) {}
+      };
+      getFriends();
+    }, [user?._id]);
     return (
       <>
         <h4 className="rightBarTitle">User Information</h4>
@@ -41,60 +55,32 @@ function Rightbar({ user }) {
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">Relationship:</span>
             <span className="rightbarInfoValue">
-              {user.relationship === 1 ? "single" : user.relationship === 1 ?"Married" : " "}
+              {user.relationship === 1
+                ? "single"
+                : user.relationship === 1
+                ? "Married"
+                : " "}
             </span>
           </div>
         </div>
         <h4 className="rightBarTitle">User Friends </h4>
         <div className="rightbarFollowings ">
-          <div className="rightbarFollowing">
-            <img
-              className="rightbarFollowingImg"
-              src={`${PF}person/1.jpeg`}
-              alt=""
-            />
-            <spam className="rightFollowingName">Dev madlani</spam>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-              className="rightbarFollowingImg"
-              src={`${PF}person/2.jpeg`}
-              alt=""
-            />
-            <spam className="rightFollowingName">Dev madlani</spam>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-              className="rightbarFollowingImg"
-              src={`${PF}person/3.jpeg`}
-              alt=""
-            />
-            <spam className="rightFollowingName">Dev madlani</spam>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-              className="rightbarFollowingImg"
-              src={`${PF}person/4.jpeg`}
-              alt=""
-            />
-            <spam className="rightFollowingName">Dev madlani</spam>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-              className="rightbarFollowingImg"
-              src={`${PF}person/5.jpeg`}
-              alt=""
-            />
-            <spam className="rightFollowingName">Dev madlani</spam>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-              className="rightbarFollowingImg"
-              src={`${PF}person/6.jpeg`}
-              alt=""
-            />
-            <spam className="rightFollowingName">Dev madlani</spam>
-          </div>
+          {friends?.map((friend) => (
+            <Link to={"/profile/"+friend.username}>
+              <div className="rightbarFollowing">
+                <img
+                  className="rightbarFollowingImg"
+                  src={
+                    friend.profilePicture
+                      ? PF + friend.profilePicture
+                      : PF + "person/noAvatar.png"
+                  }
+                  alt=""
+                />
+                <span className="rightFollowingName">{friend?.username}</span>
+              </div>
+            </Link>
+          ))}
         </div>
       </>
     );

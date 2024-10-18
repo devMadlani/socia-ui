@@ -1,13 +1,16 @@
-import React from 'react'
-import "./online.css"
+import React from "react";
+import "./online.css";
 
-function Online({user}) {
-  
-  const PF = import.meta.env.VITE_PUBLIC_FOLDER || "/assets/";
+function Online({ user }) {
+  const PF = import.meta.env.VITE_PUBLIC_FOLDER;
   return (
     <li className="rightbarFriend">
       <div className="rightbarProfileContainer">
-        <img className="righbarProfileImg" src={PF+user.profilePicture} alt="" />
+        <img
+          className="righbarProfileImg"
+          src={PF + user.profilePicture}
+          alt=""
+        />
         <span className="rightbarOnline"></span>
       </div>
       <span className="rightbarUsername">{user.username}</span>
@@ -15,4 +18,4 @@ function Online({user}) {
   );
 }
 
-export default Online
+export default Online;

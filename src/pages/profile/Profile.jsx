@@ -7,7 +7,7 @@ import "./profile.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 function Profile() {
-  const params = useParams()
+  const params = useParams();
   const [user, setUser] = useState(null);
 
   const fetchUser = async () => {
@@ -19,7 +19,7 @@ function Profile() {
   useEffect(() => {
     fetchUser();
   }, [params.username]);
-  const PF = import.meta.env.VITE_PUBLIC_FOLDER || "/assets/";
+  const PF = import.meta.env.VITE_PUBLIC_FOLDER;
   return (
     <>
       <TopBar />

@@ -10,7 +10,6 @@ function Register() {
   const confirmPassword = useRef(null);
   const history = useNavigate();
   const { user, isFetching, error, dispatch } = useContext(AuthContext);
-  console.log(user);
   const handleClick = async (e) => {
     e.preventDefault();
     if (password.current.value !== confirmPassword.current.value) {

@@ -1,28 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./post.css";
 import { format } from "timeago.js";
 import { MoreVert } from "@mui/icons-material";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 function Post({ post }) {
-  const [like, setLike] = useState(post.like);
+  const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
+  const { user: currentUser } = useContext(AuthContext);
+  const PF = import.meta.env.VITE_PUBLIC_FOLDER;
+  const { createdAt, desc, comment, img } = post;
 
-  const PF = import.meta.env.VITE_PUBLIC_FOLDER || "/assets/";
-  const { createdAt, desc, comment, img, likes } = post;
- 
   const fetchUser = async () => {
     const response = await axios.get(
       `http://localhost:8800/api/users?userId=${post.userId}`
     );
     setUser(await response.data);
   };
+
+  useEffect(() => {
+    setIsLiked(post.likes.includes(currentUser._id.$oid));
+  }, [currentUser._id.$oid, post.likes]);
   useEffect(() => {
     fetchUser();
   }, [post?.userId]);
-  const likehandle = () => {
+
+  const likehandle = async () => {
+    await axios.put("http://localhost:8800/api/posts/" + post._id + "/like", {
+      userId: currentUser._id.$oid,
+    });
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
@@ -67,7 +76,7 @@ function Post({ post }) {
               onClick={likehandle}
               alt=""
             />
-            <div className="postLikeCounter">{likes.length} likes</div>
+            <div className="postLikeCounter">{like} likes</div>
           </div>
           <div className="postButtonRight">
             <span className="postCommentText">
