@@ -1,35 +1,30 @@
 import React, { useEffect, useState } from "react";
 import "./post.css";
+import { format } from "timeago.js";
 import { MoreVert } from "@mui/icons-material";
-import { Users } from "../../dummyData";
 import axios from "axios";
-function Post({ post }) {
-  const [likes, setLikes] = useState(post.like);
-  const [isLiked, setIsLiked] = useState(false);
-  const [user,setUSer] = useState(null);
-  const PF = import.meta.env.VITE_PUBLIC_FOLDER || "/assets/";
-  
-  const fetchUser = async()=>{
-    const response = await axios.get(
-      `http://localhost:8800/api/users/${post.userId}`
-    );
-    setUSer(await response.data)
-    console.log(user._id);
-  }
-  useEffect(()=>{
-    fetchUser()
-  },[])
-  console.log(post)
-  // const {username , profilePicture} = user
-  const { desc, photo, date, comment,img } = post;
-  console.log(PF + post.img);
-  // const username = Users.filter((u) => u.id === post.userId)[0].username;
-  // const username = Users.filter((u) => u.id === post.userId)[0].username;
-  // const profilePic = Users.filter((u) => u.id === post.userId)[0]
-  //   .profilePicture;
 
+
+function Post({ post }) {
+  
+  const [like, setLike] = useState(post.like);
+  const [isLiked, setIsLiked] = useState(false);
+  const [user, setUser] = useState(null);
+
+  const PF = import.meta.env.VITE_PUBLIC_FOLDER || "/assets/";
+  const { createdAt, desc, comment, img, likes } = post;
+  //Fethcing Users
+  const fetchUser = async () => {
+    const response = await axios.get(
+      `http://localhost:8800/api/users/${post?.userId}`
+    );
+    setUser(await response.data);
+  };
+  useEffect(() => {
+    fetchUser();
+  }, [post?.userId]);
   const likehandle = () => {
-    setLikes(isLiked ? likes - 1 : likes + 1);
+    setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
   return (
@@ -39,11 +34,11 @@ function Post({ post }) {
           <div className="postTopLeft">
             <img
               className="postProfileImage"
-              src={PF + user?.profilePicture && PF+"person/1.jpeg"}
+              src={PF + user?.profilePicture || PF + "person/noAvatar.png"}
               alt=""
             />
             <span className="postUserName">{user?.username}</span>
-            <span className="postDate">{date}</span>
+            <span className="postDate">{format(createdAt)}</span>
           </div>
           <div className="postTopRight">
             <MoreVert />
@@ -51,7 +46,7 @@ function Post({ post }) {
         </div>
         <div className="postCenter">
           <span className="postText">{desc}</span>
-          <img className="postImg" src={PF+post.img} alt="" />
+          <img className="postImg" src={PF + img} alt="" />
         </div>
         <div className="postBottom">
           <div className="postButtonLeft ">
@@ -67,10 +62,10 @@ function Post({ post }) {
               onClick={likehandle}
               alt=""
             />
-            <div className="postLikeCounter">{post.likes[0]} likes</div>
+            <div className="postLikeCounter">{likes.length} likes</div>
           </div>
           <div className="postButtonRight">
-            <span className="postCommentText">{comment} comment</span>
+            <span className="postCommentText">{comment?.length || "0"} comment</span>
           </div>
         </div>
       </div>
