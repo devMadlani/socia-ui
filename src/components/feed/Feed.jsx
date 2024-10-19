@@ -21,11 +21,10 @@ function Feed({ username }) {
     };
     fetchPost();
   }, [username]);
-  // console.log(posts);
   return (
     <div className="feed">
       <div className="feedWrapper">
-        <ShareComponent />
+        {(!username || username === user.username) && <ShareComponent />}
         {posts.map((post) => (
           <Post post={post} key={post._id} />
         ))}

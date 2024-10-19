@@ -10,7 +10,7 @@ const INITIAL_STATE = {
     username: "disha",
     email: "disha@gmail.com",
     password: "$2b$10$fwp5TEVfaZscw6QFOTvRge.ZpQ5N6HAP/kcwXjT9.X8Lvl3LlcC4y",
-    profilePicture: "",
+    profilePicture: "person/1.jpeg",
     coverPicture: "post/1.jpeg",
     followers: ["6702651217cf5583b4f2efb7"],
     following: [],

@@ -1,6 +1,6 @@
 .share {
   width: 100%;
-  height: 170px;
+  /* min-height: 170px; */
   border-radius: 10px;
   -webkit-box-shadow: 0px 1px 7px 0px rgba(0, 0, 0, 0.37);
   box-shadow: 0px 1px 7px 0px rgba(0, 0, 0, 0.37);
@@ -50,17 +50,33 @@
   font-size: 18px;
   margin-right: 3px;
 }
-.shareOptionText{
-    font-size: 14px;
-    font-weight: 500;
+.shareOptionText {
+  font-size: 14px;
+  font-weight: 500;
 }
-.shareBtn{
-    border: none;
-    padding: 7px;
-    border-radius: 5px;
-    background-color: green;
-    font-weight: 500;
-    margin-right: 20px;
-    cursor: pointer;
-    color: white;
+.shareBtn {
+  border: none;
+  padding: 7px;
+  border-radius: 5px;
+  background-color: green;
+  font-weight: 500;
+  margin-right: 20px;
+  cursor: pointer;
+  color: white;
+}
+.shareImgContainer {
+  padding: 5px 20px 15px 20px;
+  position: relative;
+  /* width: 10%; */
+}
+.shareImg {
+  width: 100%;
+  object-fit: cover;
+}
+.shareCancelImg {
+  position: absolute;
+  top: -20px;
+  right: 15px;
+  cursor: pointer;
+  opacity: 0.9;
 }
