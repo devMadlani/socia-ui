@@ -10,8 +10,9 @@ function Login() {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const { user, isFetching, error, dispatch } = useContext(AuthContext);
- 
+ const navigate = useNavigate();
   const handleClick = (e) => {
+
     e.preventDefault();
     loginCall(
       {
@@ -20,6 +21,7 @@ function Login() {
       },
       dispatch
     );
+     navigate("/");
   };
   return (
     <div className="login">

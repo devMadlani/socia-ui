@@ -8,7 +8,7 @@ import { AuthContext } from "../../context/AuthContext";
 function Rightbar({ user }) {
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const [followed, setFollowed] = useState(
-    currentUser.following.includes(user?._id)
+    currentUser?.following.includes(user?._id)
   );
   const PF = import.meta.env.VITE_PUBLIC_FOLDER;
   const [friends, setFriends] = useState();
