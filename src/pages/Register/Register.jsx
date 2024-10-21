@@ -20,10 +20,18 @@ function Register() {
         email: email.current.value,
         password: password.current.value,
       };
+      dispatch({ type: "REGISTER_START" });
       try {
-        await axios.post("http://localhost:8800/api/auth/register", user);
-        history("/login")
-      } catch (error) {}
+        const res = await axios.post(
+          "http://localhost:8800/api/auth/register",
+          user,
+          { withCredentials: true }
+        );
+        dispatch({ type: "REGISTER_SUCCESS", payload: res.data.user });
+        history("/");
+      } catch (error) {
+        dispatch({ type: "LOGIN_FAILURE", payload: error });
+      }
     }
   };
   return (

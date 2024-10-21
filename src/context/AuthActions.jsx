@@ -1,3 +1,10 @@
+export const RegisterStart = (userCredentials) => ({
+  type: "REGISTER_START",
+});
+export const RegisterSuccess = (user) => ({
+  type: "REGISTER_SUCCESS",
+  payload: user,
+});
 export const LoginStart = (userCredentials) => ({
   type: "LOGIN_START",
 });
