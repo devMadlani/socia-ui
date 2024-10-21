@@ -19,7 +19,6 @@ function ShareComponet() {
   const PF = import.meta.env.VITE_PUBLIC_FOLDER;
   // const params = useParams();
   // const [user, setUser] = useState(null);
-  
 
   //  const fetchUser = async () => {
   //   const response = await axios.get(
@@ -34,26 +33,26 @@ function ShareComponet() {
   const submitHandler = async (e) => {
     e.preventDefault();
     const newPost = {
-      userId: user._id.$oid,
+      userId: user._id,
       desc: desc.current.value,
     };
     if (file) {
       const data = new FormData();
       data.append("file", file);
       try {
-       const uploadRes = await axios.post(
-         "http://localhost:8800/api/upload",
-         data
-       );
-       const fileNameWithTimestamp = uploadRes.data.fileName;
-       newPost.img = fileNameWithTimestamp;
+        const uploadRes = await axios.post(
+          "http://localhost:8800/api/upload",
+          data
+        );
+        const fileNameWithTimestamp = uploadRes.data.fileName;
+        newPost.img = fileNameWithTimestamp;
       } catch (error) {
         console.log(error);
       }
     }
     try {
       await axios.post("http://localhost:8800/api/posts", newPost);
-      window.location.reload()
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -81,7 +80,10 @@ function ShareComponet() {
         {file && (
           <div className="shareImgContainer">
             <img className="shareImg" src={URL.createObjectURL(file)} alt="" />
-            <Delete className="shareCancelImg text-gray-700" onClick={()=>setFile(null)}/>
+            <Delete
+              className="shareCancelImg text-gray-700"
+              onClick={() => setFile(null)}
+            />
           </div>
         )}
         <form className="shareBottom" onSubmit={submitHandler}>
