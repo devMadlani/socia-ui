@@ -49,7 +49,7 @@ function Messanger() {
         );
         setConversation(res.data);
 
-        // console.log(res.data);
+        console.log(res.data);
       } catch (error) {
         res.status(500).json(error);
       }

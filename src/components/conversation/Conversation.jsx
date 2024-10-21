@@ -6,7 +6,7 @@ function Conversation({ conversation, currentuser }) {
   const PF = import.meta.env.VITE_PUBLIC_FOLDER;
  
   useEffect(() => {
-    const friendId = conversation.members?.find((member) => member !== currentuser._id.$oid);
+    const friendId = conversation.members?.find((member) => member !== currentuser._id);
     const getUser = async(req,res)=>{
       try {
         const res = await axios.get("http://localhost:8800/api/users?userId="+friendId);

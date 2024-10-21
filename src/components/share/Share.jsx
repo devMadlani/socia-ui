@@ -34,7 +34,7 @@ function ShareComponet() {
   const submitHandler = async (e) => {
     e.preventDefault();
     const newPost = {
-      userId: user._id.$oid,
+      userId: user._id,
       desc: desc.current.value,
     };
     if (file) {

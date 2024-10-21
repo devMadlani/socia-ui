@@ -22,15 +22,15 @@ function Post({ post }) {
   };
 
   useEffect(() => {
-    setIsLiked(post.likes.includes(currentUser._id.$oid));
-  }, [currentUser._id.$oid, post.likes]);
+    setIsLiked(post.likes.includes(currentUser._id));
+  }, [currentUser._id, post.likes]);
   useEffect(() => {
     fetchUser();
   }, [post?.userId]);
 
   const likehandle = async () => {
     await axios.put("http://localhost:8800/api/posts/" + post._id + "/like", {
-      userId: currentUser._id.$oid,
+      userId: currentUser._id,
     });
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
