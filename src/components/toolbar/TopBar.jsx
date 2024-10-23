@@ -1,11 +1,34 @@
 import "./topbar.css";
-import { Search, Person, Chat, Notifications } from "@mui/icons-material";
+import {
+  Search,
+  Person,
+  Chat,
+  Notifications,
+  Logout,
+} from "@mui/icons-material";
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import axios from "axios";
+import { logout } from "../../context/AuthActions";
+
 function TopBar() {
+  const {dispatch} = useContext(AuthContext)
   const { user } = useContext(AuthContext);
   const PF = import.meta.env.VITE_PUBLIC_FOLDER;
+  const navigate = useNavigate()
+  const handleLogout = async () => {
+    try {
+      const res = await axios.post(
+        "http://localhost:8800/api/auth/logout",
+        {},
+        { withCredentials: true }
+      );
+      console.log(res)
+      dispatch(logout())
+      navigate("/login")
+    } catch (error) {}
+  };
   return (
     <div className="topBarContianer">
       <div className="topbarLeft">
@@ -34,27 +57,34 @@ function TopBar() {
             <span className="topbarIconBadge">1</span>
           </div>
           <Link to="/messanger">
-          <div className="topbarIconItem">
-            <Chat />
-            <span className="topbarIconBadge">1</span>
-          </div>
+            <div className="topbarIconItem">
+              <Chat />
+              <span className="topbarIconBadge">1</span>
+            </div>
           </Link>
           <div className="topbarIconItem">
             <Notifications />
             <span className="topbarIconBadge">1</span>
           </div>
         </div>
-        <Link to={`/profile/${user?.username}`}>
-          <img
-            src={
-              user?.profilePicture
-                ? PF + user?.profilePicture
-                : PF + "person/noAvatar.png"
-            }
-            alt=""
-            className="topBarImg w-"
+        <div className="flex gap-1 items-center">
+          <Link to={`/profile/${user?.username}`}>
+            <img
+              src={
+                user?.profilePicture
+                  ? PF + user?.profilePicture
+                  : PF + "person/noAvatar.png"
+              }
+              alt=""
+              className="topBarImg "
+            />
+          </Link>
+          <Logout
+            onClick={handleLogout}
+            className="logout"
+            style={{ fontSize: "18px", cursor: "pointer", margin: "auto" }}
           />
-        </Link>
+        </div>
       </div>
     </div>
   );

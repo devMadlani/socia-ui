@@ -7,11 +7,12 @@ import { AuthContext } from "../../context/AuthContext";
 function Feed({ username }) {
   const [posts, setPosts] = useState([]);
   const { user } = useContext(AuthContext);
+  console.log(user._id)
   // console.log(username);
   useEffect(() => {
     const fetchPost = async () => {
       const response = username
-        ? await axios.get("http://localhost:8800/api/posts/profile/" + username)
+        ? await axios.get("http://localhost:8800/api/posts/profile/" + user.username)
         : await axios.get(
             "http://localhost:8800/api/posts/timeline/" + user._id
           );

@@ -17,6 +17,7 @@ function ShareComponet() {
   const [file, setFile] = useState(null);
   const desc = useRef(null);
   const PF = import.meta.env.VITE_PUBLIC_FOLDER;
+  console.log("share",user)
   // const params = useParams();
   // const [user, setUser] = useState(null);
 
